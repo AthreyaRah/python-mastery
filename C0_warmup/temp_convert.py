@@ -4,7 +4,7 @@ COLD = 32
 
 
 def main():
-    celsius_temperatures = [-18, 0, 20, 37, 100,True,"Cold"]
+    celsius_temperatures = [-18, 0, 20, 37, 100, True, "Cold"]
     for temp_in_celsius in celsius_temperatures:
         try: 
             temp_in_fahrenheit = celsius_to_fahrenheit(temp_in_celsius)
