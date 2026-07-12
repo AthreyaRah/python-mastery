@@ -1,5 +1,4 @@
 def main():
-    pass
     print(factorial(5))
     print(factorial_iterative(0))
 
