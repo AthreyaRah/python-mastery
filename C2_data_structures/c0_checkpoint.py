@@ -9,12 +9,12 @@ def count_down(n):
     print("Liftoff")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 
 s = "data_engineering"
-print(s[len(s)-1::-1])
+print(s[len(s) - 1 :: -1])
 print(s[::-1])
 
 print(slice(None, None, -1).indices(len(s)))
