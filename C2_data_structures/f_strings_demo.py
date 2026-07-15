@@ -4,3 +4,7 @@ def main():
     print(f"Price: {price:>10}")
     count = 7
     print(f"Count: {count:03}")
+
+
+if __name__ == "__main__":
+    main()
