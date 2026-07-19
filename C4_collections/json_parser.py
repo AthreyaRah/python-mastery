@@ -1,5 +1,6 @@
 def main():
-    print(split_top_level_pairs('"she said \"hi\"": {"b": [1, {"c": 2}, 3]}, "d": 5'))
+    # print(split_top_level_pairs('"a": {"b": [1, {"c": 2}, 3]}, "d": 5'))
+    print(split_key_value('"time": "10:30"'))
 
 
 def detect_type(raw):
@@ -88,6 +89,24 @@ def split_top_level_pairs(body):
     split_list.append(body[start:])
     return split_list
 
+
+def split_key_value(pair):
+    i = 0 
+    splitter = None
+    inside_string = False
+    while i < len(pair):
+        if pair[i] == '"':
+            i+=1
+            if not inside_string:
+                inside_string = True
+            else:
+                inside_string = False
+        elif pair[i] == '\\' and inside_string:
+            i+=2
+        elif pair[i] == ":" and not inside_string:
+            return pair[0:i],pair[i+1:]
+        else:
+            i+=1
 
 
 if __name__ == "__main__":
