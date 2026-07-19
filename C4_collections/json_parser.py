@@ -1,6 +1,7 @@
 def main():
     # print(split_top_level_pairs('"a": {"b": [1, {"c": 2}, 3]}, "d": 5'))
-    print(split_key_value('"time": "10:30"'))
+    print(parse_value('{"name": "Rahul", "age": 27, "active": true, "manager": null, "skills": ["python", "sql"]}'))
+    
 
 
 def detect_type(raw):
@@ -92,7 +93,6 @@ def split_top_level_pairs(body):
 
 def split_key_value(pair):
     i = 0 
-    splitter = None
     inside_string = False
     while i < len(pair):
         if pair[i] == '"':
@@ -107,6 +107,44 @@ def split_key_value(pair):
             return pair[0:i],pair[i+1:]
         else:
             i+=1
+
+
+def parse_value(raw):
+    raw = raw.strip()
+    value_type = detect_type(raw)
+    if value_type == 'object':
+        end = find_matching_end(raw,0,"{","}")
+        body = raw[1:end-1]
+        pairs = split_top_level_pairs(body)
+        result = {}
+        for pair in pairs:
+            key_raw, value_raw = split_key_value(pair)
+            key_raw = key_raw.strip()
+            result[key_raw[1:-1]] = parse_value(value_raw)
+        return result
+    elif value_type == "array":
+        end = find_matching_end(raw,0,"[","]")
+        body = raw[1:end-1]
+        pairs = split_top_level_pairs(body)
+        result = []
+        for pair in pairs:
+            result.append(parse_value(pair))
+        return result
+    elif value_type == "string":
+        # strip the surrounding quotes, return plain text
+        return raw[1:-1]
+    elif value_type == "int":
+        return int(raw.strip())
+    elif value_type == "float":
+        return float(raw.strip())
+    elif value_type == "bool":
+        if raw.strip() == "true":
+            return True
+        elif raw.strip() == "false":
+            return False
+    elif value_type == "null":
+        return None
+
 
 
 if __name__ == "__main__":
