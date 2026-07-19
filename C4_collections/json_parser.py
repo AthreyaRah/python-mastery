@@ -1,7 +1,5 @@
 def main():
-    print(find_matching_end('{"a": {"b": 1}}',0,"{","}"))
-    print(find_matching_end('{"x": "\\""}',0,'{','}'))
-    print(find_matching_end('{"a": 1',0,'{','}'))
+    print(split_top_level_pairs('"she said \"hi\"": {"b": [1, {"c": 2}, 3]}, "d": 5'))
 
 
 def detect_type(raw):
@@ -58,6 +56,38 @@ def find_matching_end(raw,start,open_char,close_char):
     if depth != 0:
         raise ValueError("Unterminated object/array")
     return i
+
+
+def split_top_level_pairs(body):
+    i = 0
+    start = 0
+    depth = 0
+    inside_string = False
+    split_list = []
+    while i < len(body):
+        if body[i] == '"':
+            i+=1
+            if not inside_string:
+                inside_string = True
+            else:
+                inside_string = False
+        elif body[i] == '\\' and inside_string:
+            i+=2
+        elif (body[i] == "{" or body[i] == "["):
+            i+=1
+            depth += 1
+        elif (body[i] == "}" or body[i] == "]"):
+            i+=1
+            depth -= 1
+        elif body[i] == ',' and depth == 0 and not inside_string:
+            split_list.append(body[start:i])
+            start = i+1
+            i+=1
+        else:
+            i+=1
+    split_list.append(body[start:])
+    return split_list
+
 
 
 if __name__ == "__main__":
