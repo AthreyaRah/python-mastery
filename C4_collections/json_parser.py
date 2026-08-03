@@ -113,6 +113,7 @@ def parse_value(raw):
     raw = raw.strip()
     value_type = detect_type(raw)
     if value_type == 'object':
+        #Can use assert here to check whether raw[0] is actually { and the value_type correctly flagged it as object
         end = find_matching_end(raw,0,"{","}")
         body = raw[1:end-1]
         pairs = split_top_level_pairs(body)
@@ -131,7 +132,6 @@ def parse_value(raw):
             result.append(parse_value(pair))
         return result
     elif value_type == "string":
-        # strip the surrounding quotes, return plain text
         return raw[1:-1]
     elif value_type == "int":
         return int(raw.strip())
