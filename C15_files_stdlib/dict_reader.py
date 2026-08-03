@@ -3,7 +3,8 @@ import json
 
 
 def main():
-    csv_to_json("people.csv", "people.json")
+    # csv_to_json("people.csv", "people.json")
+    print(list(dict_reader_testing("people.csv")))
 
 
 def read_people(file_path):
@@ -26,6 +27,13 @@ def csv_to_json(csv_filepath, json_filepath):
         item["years_experience"] = int(item["years_experience"])
     with open(json_filepath, 'w') as jf:
         json.dump(csv_data, jf)
+
+
+def dict_reader_testing(file_path):
+    with open(file_path, 'r') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            yield row
 
 
 if __name__ == "__main__":
