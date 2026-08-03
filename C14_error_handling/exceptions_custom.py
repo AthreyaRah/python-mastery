@@ -36,7 +36,7 @@ def load_config_value(filepath):
             "Invalid file or file not found in path specified") from e
     except OSError as e:
         raise ConfigTypeError(
-            "Invalid file descriptor    ") from e
+            "Invalid file descriptor") from e
     return value
 
 
