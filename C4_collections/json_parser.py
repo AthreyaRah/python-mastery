@@ -113,7 +113,7 @@ def parse_value(raw):
     raw = raw.strip()
     value_type = detect_type(raw)
     if value_type == 'object':
-        #Can use assert here to check whether raw[0] is actually { and the value_type correctly flagged it as object
+        assert raw[0] == '{', "detect_type said object but value doesn't start with {"
         end = find_matching_end(raw,0,"{","}")
         body = raw[1:end-1]
         pairs = split_top_level_pairs(body)
