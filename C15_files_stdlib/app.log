@@ -1,2 +1,3 @@
 WARNING:root:Columns mismatch for rows with values ['Priya', 'Engineer', '5'] against headers: ['name', 'role', 'years_experience', 'location']
 WARNING:root:invalid value for date: not_a_date
+WARNING:root:invalid value for date: not_a_date

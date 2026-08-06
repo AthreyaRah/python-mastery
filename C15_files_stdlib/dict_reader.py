@@ -2,12 +2,16 @@ import csv
 import json
 import logging
 from datetime import datetime
+import time
 
 
 def main():
     logging.basicConfig(level=logging.WARNING, filename="app.log")
+    start = time.time()
+    final_json_array = list(read_people("people.csv"))
+    end = time.time()
     # csv_to_json("people.csv", "people.json")
-    print(list(read_people("people.csv")))
+    print(f"took {end-start} seconds")
 
 
 def read_people(file_path):
