@@ -1,0 +1,1 @@
+WARNING:root:Columns mismatch for rows with values ['Priya', 'Engineer', '5'] against headers: ['name', 'role', 'years_experience', 'location']

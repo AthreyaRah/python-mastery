@@ -1,10 +1,12 @@
 import csv
 import json
+import logging
 
 
 def main():
+    logging.basicConfig(level=logging.WARNING, filename="app.log")
     # csv_to_json("people.csv", "people.json")
-    print(list(dict_reader_testing("people.csv")))
+    print(list(read_people("people.csv")))
 
 
 def read_people(file_path):
@@ -16,8 +18,9 @@ def read_people(file_path):
             raise ValueError("empty file input with no data") from e
         for row in reader:
             if len(header) != len(row):
-                raise ValueError(
+                logging.warning(
                     f"Columns mismatch for rows with values {row} against headers: {header}")
+                continue
             yield dict(zip(header, row))
 
 
@@ -29,11 +32,11 @@ def csv_to_json(csv_filepath, json_filepath):
         json.dump(csv_data, jf)
 
 
-def dict_reader_testing(file_path):
-    with open(file_path, 'r') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            yield row
+# def dict_reader_testing(file_path):
+#     with open(file_path, 'r') as f:
+#         reader = csv.DictReader(f)
+#         for row in reader:
+#             yield row
 
 
 if __name__ == "__main__":
