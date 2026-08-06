@@ -1,6 +1,7 @@
 import csv
 import json
 import logging
+from datetime import datetime
 
 
 def main():
@@ -21,7 +22,15 @@ def read_people(file_path):
                 logging.warning(
                     f"Columns mismatch for rows with values {row} against headers: {header}")
                 continue
-            yield dict(zip(header, row))
+            people_dict = dict(zip(header, row))
+            try:
+                people_dict["date_joined"] = datetime.strptime(people_dict["date_joined"],
+                                                               "%d-%m-%Y")
+            except ValueError:
+                logging.warning(
+                    f"invalid value for date: {people_dict['date_joined']}")
+                continue
+            yield people_dict
 
 
 def csv_to_json(csv_filepath, json_filepath):

@@ -1,3 +1,3 @@
-name,role,years_experience,location
-Rahul,Data Analyst,3,"Bengaluru, Karnataka"
-Priya,Engineer,5
+name,role,years_experience,location,date_joined
+Rahul,Data Analyst,3,"Bengaluru, Karnataka",not_a_date
+Priya,Engineer,5,Hubli,03-07-2019
